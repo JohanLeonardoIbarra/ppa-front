@@ -1,0 +1,81 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Planes de Trabajo</h1>
+  <hr>
+  <div class="card border-left-primary shadow p-4 w-50 mx-auto">
+    <form class="user" (ngSubmit)="createWorkPlan()" [formGroup]="form">
+      <div class="form-group">
+        <input
+          type="number"
+          class="form-control form-control-user"
+          id="anio"
+          placeholder="Año"
+          formControlName="anio"
+        />
+      </div>
+      <hr>
+      <div>
+        <textarea
+          type="text"
+          class="form-control"
+          id="cierre"
+          placeholder="Cierre..."
+          formControlName="cierre"
+        >
+        </textarea>
+      </div>
+      <hr>
+      <div>
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Eje Transversal</label>
+          <select class="form-control" id="exampleFormControlSelect1" formControlName="id_eje_transversal">
+            <option *ngFor="let axis of transversalAxis" value="{{axis.id}}">
+              <strong>{{axis.nombre}}</strong>
+            </option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-user btn-block">
+        Crear Plan de Trabajo
+      </button>
+    </form>
+  </div>
+  <hr>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Año</th>
+              <th>Eje Transversal</th>
+              <th>Actividad PT</th>
+              <th>Cierre</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let workplan of workplans">
+              <td>{{workplan.id}}</td>
+              <td>{{workplan.anio}}</td>
+              <td>{{workplan.id_eje_transversal}}</td>
+              <td>{{workplan.actividad_pt}}</td>
+              <td>{{workplan.cierre}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->

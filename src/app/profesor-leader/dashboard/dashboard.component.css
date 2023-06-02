@@ -1,0 +1,12 @@
+.schema {
+  display: flex;
+  justify-content: space-around;
+}
+
+.schema > .wd-min {
+  width: 12%;
+}
+
+.schema>.wd-max {
+  width: 88%;
+}

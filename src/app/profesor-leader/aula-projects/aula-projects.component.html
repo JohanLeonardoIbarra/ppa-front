@@ -1,0 +1,23 @@
+<h2>Proyectos de Aula</h2>
+<div class="row d-flex justify-content-between">
+  <div *ngFor="let i of [1, 2, 3, 4]" class="col-3">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <h3>Proyecto {{i}}</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error quasi dolorem perspiciatis libero neque rerum impedit! Ea inventore eaque ratione sit unde aliquid minima. Voluptas neque harum eum accusantium exercitationem.</p>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-end p-3">
+  <button class="btn btn-primary rounded">
+    Crear Proyecto de Aula
+  </button>
+</div>

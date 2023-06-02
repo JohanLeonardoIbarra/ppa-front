@@ -1,0 +1,24 @@
+<h2>Planes de Trabajo</h2>
+<div class="row d-flex justify-content-between">
+  <div *ngFor="let workplan of workPlans" class="col-3">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <h3>Plan de Trabajo #{{workplan.id}}</h3>
+            <p>Año: <strong>{{workplan.anio}}</strong></p>
+            <p>Cierre: <span class="text-danger">{{workplan.cierre}}</span></p>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-end p-3">
+  <button class="btn btn-primary rounded">
+    Crear Plan de Trabajo
+  </button>
+</div>
