@@ -1,0 +1,27 @@
+.sidebar-w {
+  width: 15%;
+}
+
+.main-w {
+  width: 85%;
+}
+
+@media screen and (max-width: 500px) {
+  .sidebar-w {
+      width: 100%;
+    }
+
+    .main-w {
+      width: 100%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+  .sidebar-w {
+    width: 30%;
+  }
+
+  .main-w {
+    width: 70%;
+  }
+}

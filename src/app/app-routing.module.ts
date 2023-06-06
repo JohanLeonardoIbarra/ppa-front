@@ -14,7 +14,7 @@ const routes: Routes = [
     pathMatch: 'prefix',
     canActivate: [authGuard],
     loadChildren: () =>
-      import('./profesor-leader/profesor-leader.module').then(
+      import('./platform/profesor-leader/profesor-leader.module').then(
         (m) => m.ProfesorLeaderModule
       ),
   },
@@ -25,7 +25,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

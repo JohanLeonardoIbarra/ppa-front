@@ -9,14 +9,19 @@ import { AulaProjectsService } from 'src/app/services/aula-projects.service';
 })
 export class AulaProjectsComponent {
   private _aulaProjects: AulaProject[];
+  public loaded: boolean;
 
   public constructor(private aulaProjectsService: AulaProjectsService) {
     this._aulaProjects = [];
+    this.loaded = false;
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.aulaProjectsService.list().subscribe({
-      next: (aulaProjectsList) => (this._aulaProjects = aulaProjectsList),
+      next: (aulaProjectsList) => {
+        this._aulaProjects = aulaProjectsList;
+        this.loaded = true;
+      },
     });
   }
 

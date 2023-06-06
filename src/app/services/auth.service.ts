@@ -6,16 +6,19 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private _apiURl = environment.apiURL;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   register(user: User, type: Boolean): Observable<User> {
     const userType = type ? 1 : 2;
-    return this.http.post<User>(`${this._apiURl}/usuario/api/usuario/${userType}`, user);
+    return this.http.post<User>(
+      `${this._apiURl}/usuario/api/usuario/${userType}`,
+      user
+    );
   }
 
   login(loginData: Login): void {
@@ -24,10 +27,9 @@ export class AuthService {
       .subscribe({
         next: (token: Token) => {
           localStorage.setItem('session', token.token);
+          this.router.navigate(['pl', 'dashboard']);
         },
       });
-
-    this.router.navigate(['pl', 'dashboard'])
   }
 
   logout(): void {

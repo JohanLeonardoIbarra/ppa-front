@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   title: 'Production Environment Heading',
-  apiURL: 'http://dev.example.com',
+  apiURL: 'https://ppt-uivchwxb3a-uc.a.run.app',
 };

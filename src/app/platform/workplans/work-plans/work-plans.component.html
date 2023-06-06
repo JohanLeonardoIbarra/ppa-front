@@ -1,0 +1,46 @@
+<div class="card p-3">
+  <h2>Planes de Trabajo</h2>
+  <div *ngIf="loaded; else loading">
+    <div class="row d-flex justify-content-between">
+      <div *ngFor="let workplan of workPlans" class="col-12 col-md-4 col-sm-6 col-lg-3">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <h3>Plan de Trabajo #{{ workplan.id }}</h3>
+                <p>
+                  Año: <strong>{{ workplan.anio }}</strong>
+                </p>
+                <p>
+                  Cierre: <span class="text-danger">{{ workplan.cierre }}</span>
+                </p>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end p-3">
+      <button
+        class="btn btn-primary rounded"
+        [routerLink]="['..', 'workplans', 'view']"
+      >
+        Crear Plan de Trabajo
+      </button>
+    </div>
+  </div>
+  <ng-template #loading>
+    <div class="d-flex justify-content-center pr-3">
+      <div
+        class="spinner-border text-dark"
+        style="width: 9rem; height: 9rem"
+        role="status"
+      >
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </ng-template>
+</div>

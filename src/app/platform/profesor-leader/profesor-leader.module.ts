@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { ProfesorLeaderRoutingModule } from './profesor-leader.routing.module';
 import { PlmainComponent } from './plmain/plmain.component';
 import { AulaProjectsComponent } from './aula-projects/aula-projects.component';

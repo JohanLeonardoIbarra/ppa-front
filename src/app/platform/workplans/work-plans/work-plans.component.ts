@@ -9,15 +9,18 @@ import { WorkplanService } from 'src/app/services/workplan.service';
 })
 export class WorkPlansComponent {
   private _workPlans: WorkPlan[];
+  public loaded: boolean;
 
   constructor(private workPlanService: WorkplanService) {
-    this._workPlans = []
+    this._workPlans = [];
+    this.loaded = false;
   }
 
   public ngOnInit() {
     this.workPlanService.list().subscribe({
       next: (workplas) => {
-        this._workPlans = workplas
+        this._workPlans = workplas;
+        this.loaded = true;
       },
     });
   }
