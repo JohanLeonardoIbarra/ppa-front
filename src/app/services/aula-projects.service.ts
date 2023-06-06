@@ -13,7 +13,11 @@ export class AulaProjectsService {
   constructor(private http: HttpClient) {}
 
   create(aulaProject: AulaProject): Observable<unknown> {
-    return this.http.post(`${this._apiURl}`, aulaProject);
+    return this.http.post(`${this._apiURl}/pa/api/proyectoaula`, aulaProject, {
+      headers: {
+        Authorization: [localStorage.getItem('session')!],
+      },
+    });
   }
 
   list(): Observable<AulaProject[]> {

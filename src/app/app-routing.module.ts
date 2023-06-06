@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: 'auth',
     pathMatch: 'prefix',
-    canMatch: [lockLogin],
+    canActivate: [lockLogin],
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {

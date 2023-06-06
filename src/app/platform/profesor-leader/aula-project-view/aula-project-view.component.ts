@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AulaProject, Grade } from 'src/app/interfaces/aulaProject.interface';
-import { TransversalAxis, TransversalAxisType } from 'src/app/interfaces/transversalAxis.interface';
+import {
+  TransversalAxis,
+  TransversalAxisType,
+} from 'src/app/interfaces/transversalAxis.interface';
 import { AulaProjectsService } from 'src/app/services/aula-projects.service';
 import { AxisService } from 'src/app/services/axis.service';
 
@@ -17,7 +20,11 @@ export class AulaProjectViewComponent {
   private _grades: Grade[];
   private _aulaProjects: AulaProject[];
 
-  public constructor(private fb: FormBuilder, private axixService: AxisService, private aulaProjectsService: AulaProjectsService) {
+  public constructor(
+    private fb: FormBuilder,
+    private axixService: AxisService,
+    private aulaProjectsService: AulaProjectsService
+  ) {
     this._form = fb.group({
       nombre: [''],
       id_eje_transversal: [1],
@@ -37,19 +44,19 @@ export class AulaProjectViewComponent {
 
   ngOnInit() {
     this.axixService.listTransversalAxis().subscribe({
-      next: axisList => this._transversalAxis = axisList
+      next: (axisList) => (this._transversalAxis = axisList),
     });
 
     this.axixService.listTransversalAxisTypes().subscribe({
-      next: types => this._axisTypes = types
-    })
+      next: (types) => (this._axisTypes = types),
+    });
 
     this.aulaProjectsService.grades().subscribe({
-      next: gradesList => this._grades = gradesList
-    })
+      next: (gradesList) => (this._grades = gradesList),
+    });
 
     this.aulaProjectsService.list().subscribe({
-      next: aulaProjectsList => this._aulaProjects = aulaProjectsList
+      next: (aulaProjectsList) => (this._aulaProjects = aulaProjectsList),
     });
   }
 
@@ -62,9 +69,10 @@ export class AulaProjectViewComponent {
   }
 
   get axisTypes(): TransversalAxisType[] {
-    return this._axisTypes.filter(type => {
+    return this._axisTypes.filter((type) => {
       return (
-        type.id_eje_transversal == this._form.controls['id_eje_transversal'].value
+        type.id_eje_transversal ==
+        this._form.controls['id_eje_transversal'].value
       );
     });
   }
@@ -82,7 +90,7 @@ export class AulaProjectViewComponent {
   }
 
   getGrade(id: number) {
-    return this.grades.filter(x => x.id == id).shift();
+    return this.grades.filter((x) => x.id == id).shift();
   }
 
   createAulaProject() {
@@ -99,8 +107,10 @@ export class AulaProjectViewComponent {
 
     this.aulaProjectsService.create(aulaProject).subscribe({
       next: () => {
-        console.log(true)
-      }
-    })
+        this.aulaProjectsService.list().subscribe({
+          next: (aulaProjectsList) => (this._aulaProjects = aulaProjectsList),
+        });
+      },
+    });
   }
 }

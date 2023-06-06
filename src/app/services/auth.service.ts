@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login, Token, User } from '../interfaces/user.interface';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
@@ -34,6 +34,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('session');
-    this.router.navigate(['login']);
+    this.router.navigate(['auth', 'login']);
   }
 }

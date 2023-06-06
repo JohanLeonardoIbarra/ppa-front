@@ -1,4 +1,4 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, CanMatchFn } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
   return localStorage.getItem('session') != undefined
