@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AulaProject, Grade } from 'src/app/interfaces/aulaProject.interface';
 import {
   TransversalAxis,
@@ -23,7 +24,8 @@ export class AulaProjectViewComponent {
   public constructor(
     private fb: FormBuilder,
     private axixService: AxisService,
-    private aulaProjectsService: AulaProjectsService
+    private aulaProjectsService: AulaProjectsService,
+    private toastr: ToastrService
   ) {
     this._form = fb.group({
       nombre: [''],
@@ -112,5 +114,7 @@ export class AulaProjectViewComponent {
         });
       },
     });
+
+    this.toastr.success('Prouecto de aula creado con exito!')
   }
 }

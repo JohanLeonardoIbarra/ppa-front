@@ -21,7 +21,8 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css",
-              "src/assets/css/sb-admin-2.min.css"
+              "src/assets/css/sb-admin-2.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },

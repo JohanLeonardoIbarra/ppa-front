@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { ActivityPT, WorkPlan } from 'src/app/interfaces/workplan.interface';
 import { WorkplanService } from 'src/app/services/workplan.service';
 
@@ -14,7 +15,8 @@ export class ActivitiesComponent {
 
   public constructor(
     private fb: FormBuilder,
-    private workPlanService: WorkplanService
+    private workPlanService: WorkplanService,
+    private toastr: ToastrService
   ) {
     this._workplans = [];
   }
@@ -59,6 +61,7 @@ export class ActivitiesComponent {
     this.workPlanService.createActivity(activity).subscribe({
       next: () => {
         this._form.reset();
+        this.toastr.success('Actividad creada con exito!')
       },
     });
   }

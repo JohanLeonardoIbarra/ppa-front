@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { map, switchMap, timeout, timer } from 'rxjs';
 import { TransversalAxis } from 'src/app/interfaces/transversalAxis.interface';
 import { WorkPlan } from 'src/app/interfaces/workplan.interface';
@@ -19,7 +20,8 @@ export class ViewWorkPlansComponent {
   public constructor(
     private fb: FormBuilder,
     private workPlanService: WorkplanService,
-    private axixService: AxisService
+    private axixService: AxisService,
+    private toastr: ToastrService
   ) {
     this._workplans = [];
     this._transversalAxis = [];
@@ -66,16 +68,12 @@ export class ViewWorkPlansComponent {
     this.workPlanService.create(workPlan).subscribe({
       next: () => {
         this._form.reset();
-      },
-    });
-
-    timer(1000).subscribe({
-      next: () => {
         this.workPlanService.list().subscribe({
           next: (workplans) => {
             this._workplans = workplans;
           },
         });
+        this.toastr.success('Plan de trabajo creado con exito!')
       },
     });
   }
