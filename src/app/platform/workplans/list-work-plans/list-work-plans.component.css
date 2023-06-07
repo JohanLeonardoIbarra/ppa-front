@@ -1,9 +1,0 @@
-.container-fluid {
-  height: 790px;
-  overflow-y: scroll;
-}
-
-table {
-  height: 100% !important;
-  overflow-y: scroll !important;
-}

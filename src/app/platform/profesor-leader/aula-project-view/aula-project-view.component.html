@@ -1,138 +1,137 @@
 <div class="container-fluid">
   <h1 class="h3 mb-2 text-gray-800">Proyectos de Aula</h1>
-  <hr>
-  <div class="w-50 mx-auto mb-3">
-    <div class="card border-left-primary shadow p-4">
-      <form class="user" (ngSubmit)="createAulaProject()" [formGroup]="form">
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control form-control-user"
-            id="nombre"
-            placeholder="Nombre"
-            formControlName="nombre"
-          />
-        </div>
-        <hr />
-        <div>
+  <hr />
+  <div class="row">
+    <div class="col-12 col-lg-5 mr-auto mb-3">
+      <div class="card border-left-primary shadow p-4">
+        <form class="user" (ngSubmit)="createAulaProject()" [formGroup]="form">
           <div class="form-group">
-            <label for="transversalAxis">Eje Transversal</label>
-            <select
-              class="form-control"
-              id="transversalAxis"
-              formControlName="id_eje_transversal"
-            >
-              <option
-                *ngFor="let axis of transversalAxis"
-                value="{{ axis.id }}"
+            <input
+              type="text"
+              class="form-control form-control-user"
+              id="nombre"
+              placeholder="Nombre"
+              formControlName="nombre"
+            />
+          </div>
+          <hr />
+          <div>
+            <div class="form-group">
+              <label for="transversalAxis">Eje Transversal</label>
+              <select
+                class="form-control"
+                id="transversalAxis"
+                formControlName="id_eje_transversal"
               >
-                <strong>{{ axis.nombre }}</strong>
-              </option>
-            </select>
+                <option
+                  *ngFor="let axis of transversalAxis"
+                  value="{{ axis.id }}"
+                >
+                  <strong>{{ axis.nombre }}</strong>
+                </option>
+              </select>
+            </div>
           </div>
-        </div>
-        <hr />
-        <div>
-          <div class="form-group">
-            <label for="tipoEje">Tipo de Eje Transversal</label>
-            <select
+          <hr />
+          <div>
+            <div class="form-group">
+              <label for="tipoEje">Tipo de Eje Transversal</label>
+              <select
+                class="form-control"
+                id="tipoEje"
+                formControlName="tipo_eje"
+              >
+                <option *ngFor="let type of axisTypes" value="{{ type.id }}">
+                  <strong>{{ type.descripcion }}</strong>
+                </option>
+              </select>
+            </div>
+          </div>
+          <hr />
+          <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <label for="fecha_inicio">Fecha Inicio</label>
+              <input
+                type="date"
+                class="form-control form-control-user"
+                id="fecha_inicio"
+                placeholder="Fecha Inicio"
+                formControlName="fecha_inicio"
+              />
+            </div>
+            <div class="col-sm-6">
+              <label for="fecha_fin">Fecha Fin</label>
+              <input
+                type="date"
+                class="form-control form-control-user"
+                id="fecha_fin"
+                placeholder="Fecha Fin"
+                formControlName="fecha_fin"
+              />
+            </div>
+          </div>
+          <hr />
+          <div>
+            <div class="form-group">
+              <label for="grade">Grado</label>
+              <select class="form-control" id="grade" formControlName="grado">
+                <option *ngFor="let grade of grades" value="{{ grade.id }}">
+                  <strong>{{ grade.descripcion }}</strong>
+                </option>
+              </select>
+            </div>
+          </div>
+          <br />
+          <div>
+            <label for="cierre">Cierre</label>
+            <textarea
+              type="text"
               class="form-control"
-              id="tipoEje"
-              formControlName="tipo_eje"
+              id="cierre"
+              placeholder="Cierre..."
+              formControlName="cierre"
             >
-              <option *ngFor="let type of axisTypes" value="{{ type.id }}">
-                <strong>{{ type.descripcion }}</strong>
-              </option>
-            </select>
+            </textarea>
           </div>
-        </div>
-        <hr />
-        <div class="form-group row">
-          <div class="col-sm-6 mb-3 mb-sm-0">
-            <label for="fecha_inicio">Fecha Inicio</label>
-            <input
-              type="date"
-              class="form-control form-control-user"
-              id="fecha_inicio"
-              placeholder="Fecha Inicio"
-              formControlName="fecha_inicio"
-            />
-          </div>
-          <div class="col-sm-6">
-            <label for="fecha_fin">Fecha Fin</label>
-            <input
-              type="date"
-              class="form-control form-control-user"
-              id="fecha_fin"
-              placeholder="Fecha Fin"
-              formControlName="fecha_fin"
-            />
-          </div>
-        </div>
-        <hr />
-        <div>
-          <div class="form-group">
-            <label for="grade">Grado</label>
-            <select class="form-control" id="grade" formControlName="grado">
-              <option *ngFor="let grade of grades" value="{{ grade.id }}">
-                <strong>{{ grade.descripcion }}</strong>
-              </option>
-            </select>
-          </div>
-        </div>
-        <br />
-        <div>
-          <label for="cierre">Cierre</label>
-          <textarea
-            type="text"
-            class="form-control"
-            id="cierre"
-            placeholder="Cierre..."
-            formControlName="cierre"
-          >
-          </textarea>
-        </div>
-        <hr />
-        <button type="submit" class="btn btn-primary btn-user btn-block">
-          Crear Projecto de Aula
-        </button>
-      </form>
-    </div>
-  </div>
-  <div>
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+          <hr />
+          <button type="submit" class="btn btn-primary btn-user btn-block">
+            Crear Projecto de Aula
+          </button>
+        </form>
       </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table
-            class="table table-bordered"
-            id="dataTable"
-            width="100%"
-            cellspacing="0"
-          >
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Eje Transversal</th>
-                <th>Fecha de Inicio</th>
-                <th>Fechja Fin</th>
-                <th>Grado</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let aulaProject of aulaProjects">
-                <td>{{ aulaProject.id }}</td>
-                <td>{{ aulaProject.nombre }}</td>
-                <td>{{ getAxis(aulaProject.id_eje_transversal)?.nombre }}</td>
-                <td>{{ aulaProject.fecha_inicio }}</td>
-                <td>{{ aulaProject.fecha_fin }}</td>
-                <td>{{ getGrade(aulaProject.grado)?.descripcion }}</td>
-              </tr>
-            </tbody>
-          </table>
+    </div>
+    <div class="col-12 col-lg-7">
+      <div class="card shadow mb-4">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table
+              class="table table-bordered"
+              id="dataTable"
+              width="100%"
+              cellspacing="0"
+            >
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Eje Transversal</th>
+                  <th>Fecha de Inicio</th>
+                  <th>Fechja Fin</th>
+                  <th>Grado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let aulaProject of aulaProjects">
+                  <td>{{ aulaProject.id }}</td>
+                  <td>{{ aulaProject.nombre }}</td>
+                  <td>{{ getAxis(aulaProject.id_eje_transversal)?.nombre }}</td>
+                  <td>{{ aulaProject.fecha_inicio }}</td>
+                  <td>{{ aulaProject.fecha_fin }}</td>
+                  <td>{{ getGrade(aulaProject.grado)?.descripcion }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

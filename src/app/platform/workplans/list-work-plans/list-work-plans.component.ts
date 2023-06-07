@@ -47,7 +47,7 @@ export class ViewWorkPlansComponent {
   }
 
   get workplans(): WorkPlan[] {
-    return this._workplans;
+    return this._workplans
   }
 
   get form(): FormGroup {
