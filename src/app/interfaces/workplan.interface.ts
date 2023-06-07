@@ -14,5 +14,4 @@ export interface ActivityPT {
   docente_apoyo: number;
   cumplimiento: number;
   observacion: string;
-  plan_trabajo: number;
 }

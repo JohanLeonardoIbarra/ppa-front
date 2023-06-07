@@ -64,7 +64,6 @@
                 <th>Id</th>
                 <th>Año</th>
                 <th>Eje Transversal</th>
-                <th>Actividad PT</th>
                 <th>Cierre</th>
               </tr>
             </thead>
@@ -72,8 +71,7 @@
               <tr *ngFor="let workplan of workplans">
                 <td>{{ workplan.id }}</td>
                 <td>{{ workplan.anio }}</td>
-                <td>{{ workplan.id_eje_transversal }}</td>
-                <td>{{ workplan.actividad_pt }}</td>
+                <td>{{ transversalAxis[workplan.id_eje_transversal].nombre }}</td>
                 <td>{{ workplan.cierre }}</td>
               </tr>
             </tbody>

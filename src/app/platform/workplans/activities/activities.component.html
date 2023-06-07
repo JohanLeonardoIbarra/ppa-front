@@ -1,77 +1,150 @@
 <div class="container-fluid">
-  <h1 class="h3 mb-2 text-gray-800">Creacion de Actividades</h1>
-  <hr>
-  <div class="card border-left-primary shadow p-4 w-50 mx-auto">
-    <form class="user" (ngSubmit)="createActivity()" [formGroup]="form">
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control form-control-user"
-          id="nombre"
-          placeholder="Nombre"
-          formControlName="nombre"
-        />
-      </div>
-      <hr>
-      <div class="form-group row">
-        <div class="col-sm-6 mb-3 mb-sm-0">
-          <label for="fecha_inicio">Fecha Inicio</label>
-          <input
-            type="date"
-            class="form-control form-control-user"
-            id="fecha_inicio"
-            placeholder="Nombres"
-            formControlName="fecha_inicio"
-          />
+  <div class="row">
+    <div class="col-12 col-lg-5">
+      <div class="card border-left-primary shadow p-4 mr-auto">
+        <div>
+          <h2>Crear Actividad de plan de trabajo</h2>
         </div>
-        <div class="col-sm-6">
-          <label for="fecha_fin">Fecha Fin</label>
-          <input
-            type="date"
-            class="form-control form-control-user"
-            id="fecha_fin"
-            placeholder="Apellidos"
-            formControlName="fecha_fin"
-          />
+        <hr />
+        <form class="user" (ngSubmit)="createActivity()" [formGroup]="form">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control form-control-user"
+              id="nombre"
+              placeholder="Nombre"
+              formControlName="nombre"
+            />
+          </div>
+          <hr />
+          <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <label for="fecha_inicio">Fecha Inicio</label>
+              <input
+                type="date"
+                class="form-control form-control-user"
+                id="fecha_inicio"
+                placeholder="Nombres"
+                formControlName="fecha_inicio"
+              />
+            </div>
+            <div class="col-sm-6">
+              <label for="fecha_fin">Fecha Fin</label>
+              <input
+                type="date"
+                class="form-control form-control-user"
+                id="fecha_fin"
+                placeholder="Apellidos"
+                formControlName="fecha_fin"
+              />
+            </div>
+          </div>
+          <hr />
+          <div>
+            <label for="cumplimiento">Cumplimiento</label>
+            <input
+              type="number"
+              class="form-control form-control-user"
+              id="cumplimiento"
+              placeholder="Cumplimiento"
+              formControlName="cumplimiento"
+            />
+          </div>
+          <br />
+          <div>
+            <label for="observacion">Observacion</label>
+            <textarea
+              type="text"
+              class="form-control"
+              id="observacion"
+              placeholder="Observacion..."
+              formControlName="observacion"
+            >
+            </textarea>
+          </div>
+          <hr />
+          <div>
+            <div class="form-group">
+              <label for="workplan_c">Plan de Trabajo</label>
+              <select
+                class="form-control"
+                id="workplan_c"
+                formControlName="plan_trabajo"
+              >
+                <option
+                  *ngFor="let workplan of workplans; let i = index"
+                  value="{{ i }}"
+                >
+                  <p>
+                    Año:
+                    <strong
+                      >{{ workplan.anio }}:
+                      {{
+                        transversalAxis[workplan.id_eje_transversal].nombre
+                      }}</strong
+                    >
+                  </p>
+                </option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-user btn-block">
+            Crear Actividad
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="card shadow p-4">
+        <h2>Actividades:</h2>
+        <div>
+          <form [formGroup]="acForm">
+            <label for="list">Plan de Trabajo</label>
+            <select
+              class="form-control"
+              name="list-workplans"
+              id="list"
+              formControlName="activity"
+            >
+              <option
+                value="{{ i }}"
+                *ngFor="let workplan of workplans; let i = index"
+              >
+                <p>
+                  Año:
+                  <strong
+                    >{{ workplan.anio }}:
+                    {{
+                      transversalAxis[workplan.id_eje_transversal].nombre
+                    }}</strong
+                  >
+                </p>
+              </option>
+            </select>
+          </form>
+          <hr />
+        </div>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Inicio</th>
+                <th scope="col">Fin</th>
+                <th scope="col">Cumplimiento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let activity of activities">
+                <th>{{activity.nombre}}</th>
+                <td>{{activity.fecha_inicio}}</td>
+                <td>{{activity.fecha_fin}}</td>
+                <td>{{activity.cumplimiento}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <hr>
-      <div>
-        <label for="cumplimiento">Cumplimiento</label>
-        <input
-          type="number"
-          class="form-control form-control-user"
-          id="cumplimiento"
-          placeholder="Cumplimiento"
-          formControlName="cumplimiento"
-        />
-      </div>
-      <br>
-      <div>
-        <label for="observacion">Observacion</label>
-        <textarea
-          type="text"
-          class="form-control"
-          id="observacion"
-          placeholder="Observacion..."
-          formControlName="observacion"
-        >
-        </textarea>
-      </div>
-      <hr>
-      <div>
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Plan de Trabajo</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option *ngFor="let workplan of workplans" value="{{workplan.id}}">
-              <p>Año: <strong>{{workplan.anio}}</strong></p>
-            </option>
-          </select>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary btn-user btn-block">
-        Crear Actividad
-      </button>
-    </form>
+    </div>
   </div>
 </div>

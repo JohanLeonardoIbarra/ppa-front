@@ -5,12 +5,12 @@ import { environment } from 'src/environments/environment';
 import { ActivityPT, WorkPlan } from '../interfaces/workplan.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WorkplanService {
-    private _apiURl = environment.apiURL;
+  private _apiURl = environment.apiURL;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   list(): Observable<WorkPlan[]> {
     return this.http.get<WorkPlan[]>(`${this._apiURl}/pt/api/plantrabajo`);
@@ -20,7 +20,16 @@ export class WorkplanService {
     return this.http.post(`${this._apiURl}/pt/api/plantrabajo`, workPlan);
   }
 
-  createActivity(activity: ActivityPT): Observable<unknown> {
-    return this.http.post(`${this._apiURl}/apt/api/actividadpt`, activity);
+  createActivity(activity: ActivityPT, id: number): Observable<unknown> {
+    return this.http.post(
+      `${this._apiURl}/apt/api/actividadpt/${id}`,
+      activity
+    );
+  }
+
+  listActivitys(id: number): Observable<ActivityPT[]> {
+    return this.http.get<ActivityPT[]>(
+      `${this._apiURl}/pt/api/actividadespt/${id}`
+    );
   }
 }
