@@ -26,11 +26,11 @@ const routes: Routes = [
       },
       {
         path: 'projects/view',
-        component: AulaProjectViewComponent
+        component: AulaProjectViewComponent,
       },
       {
         path: 'projects/activity',
-        component: AulaProjectActivitiesComponent
+        component: AulaProjectActivitiesComponent,
       },
       {
         path: '**',

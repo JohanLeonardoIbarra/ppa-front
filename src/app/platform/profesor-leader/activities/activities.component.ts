@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import {
   ActivityAP,
@@ -34,13 +34,13 @@ export class AulaProjectActivitiesComponent {
     private studentsService: StudentsService
   ) {
     this._form = this.fb.group({
-      nombre: [''],
-      fecha_inicio: [''],
-      fecha_fin: [''],
-      docente_apoyo: 1,
-      cumplimiento: [''],
-      observacion: [''],
-      proyecto_aula: 1,
+      nombre: ['', [Validators.required]],
+      fecha_inicio: ['', [Validators.required]],
+      fecha_fin: ['', [Validators.required]],
+      docente_apoyo: [1, [Validators.required]],
+      cumplimiento: ['', [Validators.required]],
+      observacion: ['', [Validators.required]],
+      proyecto_aula: [1, [Validators.required]],
       studentCode: [''],
     });
 
@@ -76,12 +76,6 @@ export class AulaProjectActivitiesComponent {
         next: (students) => {
           this._students = students;
         },
-      });
-
-    this._acForm.controls['activity'].valueChanges
-      .pipe(switchMap((value) => this.aulaProjectService.listActivities(value)))
-      .subscribe({
-        next: (activities) => (this._activities = activities),
       });
 
     this.acForm.controls['activity'].valueChanges.subscribe({
