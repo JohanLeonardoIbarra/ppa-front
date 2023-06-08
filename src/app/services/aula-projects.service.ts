@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ActivityAP, AulaProject, Grade } from '../interfaces/aulaProject.interface';
+import { ActivityAP, ActivityAPCreation, AulaProject, Grade } from '../interfaces/aulaProject.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -28,7 +28,15 @@ export class AulaProjectsService {
     return this.http.get<Grade[]>(`${this._apiURl}/grado/api/grado`);
   }
 
-  createActivity(activity: ActivityAP): Observable<unknown> {
-    return this.http.post(`${this._apiURl}`, activity);
+  createActivity(body: ActivityAPCreation, id: number): Observable<unknown> {
+    return this.http.post(`${this._apiURl}/apa/api/actividadpa/${id}`, body, {
+      headers: {
+        Authorization: [localStorage.getItem('session')!]
+      }
+    });
+  }
+
+  listActivities(id: number): Observable<ActivityAP[]> {
+    return this.http.get<ActivityAP[]>(`${this._apiURl}/pa/api/actividadespa/${id}`)
   }
 }

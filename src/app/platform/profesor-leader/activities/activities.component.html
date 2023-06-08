@@ -1,77 +1,167 @@
 <div class="container-fluid">
-  <h1 class="h3 mb-2 text-gray-800">Creacion de Actividades</h1>
-  <hr>
-  <div class="card border-left-primary shadow p-4 w-50 mx-auto">
-    <form class="user" (ngSubmit)="createActivity()" [formGroup]="form">
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control form-control-user"
-          id="nombre"
-          placeholder="Nombre"
-          formControlName="nombre"
-        />
-      </div>
-      <hr>
-      <div class="form-group row">
-        <div class="col-sm-6 mb-3 mb-sm-0">
-          <label for="fecha_inicio">Fecha Inicio</label>
-          <input
-            type="date"
-            class="form-control form-control-user"
-            id="fecha_inicio"
-            placeholder="Nombres"
-            formControlName="fecha_inicio"
-          />
+  <div class="row">
+    <div class="col-12 col-lg-5">
+      <div class="card border-left-primary shadow p-4 mr-auto">
+        <div>
+          <h2>Crear actividad de proyecto de Aula</h2>
+          <hr />
         </div>
-        <div class="col-sm-6">
-          <label for="fecha_fin">Fecha Fin</label>
-          <input
-            type="date"
-            class="form-control form-control-user"
-            id="fecha_fin"
-            placeholder="Apellidos"
-            formControlName="fecha_fin"
-          />
+        <form class="user" (ngSubmit)="createActivity()" [formGroup]="form">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control form-control-user"
+              id="nombre"
+              placeholder="Nombre"
+              formControlName="nombre"
+            />
+          </div>
+          <hr />
+          <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <label for="fecha_inicio">Fecha Inicio</label>
+              <input
+                type="date"
+                class="form-control form-control-user"
+                id="fecha_inicio"
+                placeholder="Nombres"
+                formControlName="fecha_inicio"
+              />
+            </div>
+            <div class="col-sm-6">
+              <label for="fecha_fin">Fecha Fin</label>
+              <input
+                type="date"
+                class="form-control form-control-user"
+                id="fecha_fin"
+                placeholder="Apellidos"
+                formControlName="fecha_fin"
+              />
+            </div>
+          </div>
+          <hr />
+          <div>
+            <label for="cumplimiento">Cumplimiento</label>
+            <input
+              type="number"
+              class="form-control form-control-user"
+              id="cumplimiento"
+              placeholder="Cumplimiento"
+              formControlName="cumplimiento"
+            />
+          </div>
+          <br />
+          <div>
+            <label for="observacion">Observacion</label>
+            <textarea
+              type="text"
+              class="form-control"
+              id="observacion"
+              placeholder="Observacion..."
+              formControlName="observacion"
+            >
+            </textarea>
+          </div>
+          <hr />
+          <div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Proyecto de Aula</label>
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option
+                  *ngFor="let aulaProject of aulaProjects"
+                  value="{{ aulaProject.id }}"
+                >
+                  <strong>{{ aulaProject.nombre }}</strong>
+                </option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div class="d-flex flex-wrap">
+              <button
+                type="button"
+                class="btn btn-success border rounded-md text-white"
+                *ngFor="let student of selectedStudents"
+                (click)="removeStudent(student)"
+              >
+                <span>{{ student.codigo }}: {{ student.nombre }}</span>
+              </button>
+            </div>
+            <div>
+              <label for="searchStudents">Students</label>
+              <input
+                id="searchStudents"
+                class="form-control"
+                type="text"
+                formControlName="studentCode"
+              />
+              <div>
+                <div
+                  class="form-control"
+                  *ngFor="let student of students"
+                  (click)="addStudent(student)"
+                >
+                  <span>{{ student.codigo }}: {{student.nombre}} {{student.apellido}} </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <button type="submit" class="btn btn-primary btn-user btn-block">
+            Crear Actividad
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="card shadow p-4">
+        <h2>Actividades:</h2>
+        <div>
+          <form [formGroup]="acForm">
+            <label for="list">Plan de Trabajo</label>
+            <select
+              class="form-control"
+              name="list-workplans"
+              id="list"
+              formControlName="activity"
+            >
+              <option
+                value="{{ i }}"
+                *ngFor="let aulaProject of aulaProjects; let i = index"
+              >
+                <p>
+                  {{ aulaProject.nombre }} |
+                  {{ axisTypes[aulaProject.tipo_eje].descripcion }}
+                </p>
+              </option>
+            </select>
+          </form>
+          <hr />
         </div>
-      </div>
-      <hr>
-      <div>
-        <label for="cumplimiento">Cumplimiento</label>
-        <input
-          type="number"
-          class="form-control form-control-user"
-          id="cumplimiento"
-          placeholder="Cumplimiento"
-          formControlName="cumplimiento"
-        />
-      </div>
-      <br>
-      <div>
-        <label for="observacion">Observacion</label>
-        <textarea
-          type="text"
-          class="form-control"
-          id="observacion"
-          placeholder="Observacion..."
-          formControlName="observacion"
-        >
-        </textarea>
-      </div>
-      <hr>
-      <div>
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Proyecto de Aula</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option *ngFor="let aulaProject of aulaProjects" value="{{aulaProject.id}}">
-              <strong>{{aulaProject.nombre}}</strong>
-            </option>
-          </select>
+        <div *ngIf="activities.length != 0; else notFound">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Inicio</th>
+                <th scope="col">Fin</th>
+                <th scope="col">Cumplimiento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let activity of activities">
+                <th>{{ activity.nombre }}</th>
+                <td>{{ activity.fecha_inicio }}</td>
+                <td>{{ activity.fecha_fin }}</td>
+                <td>{{ activity.cumplimiento }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <ng-template #notFound>
+          <h3 class="">No hay actividades creadas para este plan de trabajo</h3>
+        </ng-template>
       </div>
-      <button type="submit" class="btn btn-primary btn-user btn-block">
-        Crear Actividad
-      </button>
-    </form>
+    </div>
   </div>
 </div>

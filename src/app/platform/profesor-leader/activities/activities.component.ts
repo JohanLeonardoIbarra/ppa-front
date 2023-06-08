@@ -1,9 +1,16 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivityAP, AulaProject } from 'src/app/interfaces/aulaProject.interface';
-import { ActivityPT, WorkPlan } from 'src/app/interfaces/workplan.interface';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import {
+  ActivityAP,
+  ActivityAPCreation,
+  AulaProject,
+} from 'src/app/interfaces/aulaProject.interface';
+import { Student } from 'src/app/interfaces/student.interface';
+import { TransversalAxisType } from 'src/app/interfaces/transversalAxis.interface';
 import { AulaProjectsService } from 'src/app/services/aula-projects.service';
-import { WorkplanService } from 'src/app/services/workplan.service';
+import { AxisService } from 'src/app/services/axis.service';
+import { StudentsService } from 'src/app/services/students.service';
 
 @Component({
   selector: 'app-activities',
@@ -11,17 +18,21 @@ import { WorkplanService } from 'src/app/services/workplan.service';
   styleUrls: ['./activities.component.css'],
 })
 export class AulaProjectActivitiesComponent {
-  private _form!: FormGroup;
+  private _form: FormGroup;
+  private _acForm: FormGroup;
   private _aulaProjects: AulaProject[];
+  private _axisTypes: TransversalAxisType[];
+  private _activities: ActivityAP[];
+  private _students: Student[];
+
+  public selectedStudents: Student[];
 
   public constructor(
     private fb: FormBuilder,
-    private aulaProjectService: AulaProjectsService
+    private aulaProjectService: AulaProjectsService,
+    private axisService: AxisService,
+    private studentsService: StudentsService
   ) {
-    this._aulaProjects = [];
-  }
-
-  public ngOnInit() {
     this._form = this.fb.group({
       nombre: [''],
       fecha_inicio: [''],
@@ -29,12 +40,55 @@ export class AulaProjectActivitiesComponent {
       docente_apoyo: 1,
       cumplimiento: [''],
       observacion: [''],
-      plan_trabajo: 0,
+      proyecto_aula: 1,
+      studentCode: [''],
     });
 
+    this._acForm = fb.group({
+      activity: [1],
+    });
+
+    this._aulaProjects = [];
+    this._axisTypes = [];
+    this._activities = [];
+    this.selectedStudents = [];
+    this._students = [];
+  }
+
+  public ngOnInit() {
     this.aulaProjectService.list().subscribe({
       next: (aulaProjects) => {
         this._aulaProjects = aulaProjects;
+      },
+    });
+
+    this.axisService.listTransversalAxisTypes().subscribe({
+      next: (axisTypes) => (this._axisTypes = axisTypes),
+    });
+
+    this._form.controls['studentCode'].valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((value) => this.studentsService.list(value))
+      )
+      .subscribe({
+        next: (students) => {
+          this._students = students;
+        },
+      });
+
+    this._acForm.controls['activity'].valueChanges
+      .pipe(switchMap((value) => this.aulaProjectService.listActivities(value)))
+      .subscribe({
+        next: (activities) => (this._activities = activities),
+      });
+
+    this.acForm.controls['activity'].valueChanges.subscribe({
+      next: () => {
+        this.listActivities(
+          this._aulaProjects[this.acForm.controls['activity'].value].id!
+        );
       },
     });
   }
@@ -47,19 +101,69 @@ export class AulaProjectActivitiesComponent {
     return this._form;
   }
 
+  get acForm(): FormGroup {
+    return this._acForm;
+  }
+
+  get axisTypes(): TransversalAxisType[] {
+    return this._axisTypes;
+  }
+
+  get activities(): ActivityAP[] {
+    return this._activities;
+  }
+
+  get students(): Student[] {
+    return this._students;
+  }
+
+  public addStudent(student: Student) {
+    if (
+      !this.selectedStudents.some(
+        (actual) => actual.correo_electronico == student.correo_electronico
+      )
+    ) {
+      this.selectedStudents.push(student);
+      this._form.controls['studentCode'].setValue('');
+      this._students = [];
+    }
+  }
+
+  public removeStudent(student: Student) {
+    this.selectedStudents = this.selectedStudents.filter(
+      (value) => value.correo_electronico != student.correo_electronico
+    );
+  }
+
   public createActivity() {
+    if (!this.form.valid) return;
+
     const activity: ActivityAP = {
       nombre: this._form.controls['nombre'].value,
       fecha_inicio: this._form.controls['fecha_inicio'].value,
       fecha_fin: this._form.controls['fecha_fin'].value,
       cumplimiento: this._form.controls['cumplimiento'].value,
       observacion: this._form.controls['observacion'].value,
-      proyecto_aula: this._form.controls['proyecto_aula'].value,
     };
 
-    this.aulaProjectService.createActivity(activity).subscribe({
+    const body: ActivityAPCreation = {
+      actividadPA: activity,
+      estudiantes: this.selectedStudents.map((student) => student.codigo),
+    };
+
+    const aulaProject = this._form.controls['proyecto_aula'].value;
+
+    this.aulaProjectService.createActivity(body, aulaProject).subscribe({
       next: () => {
         this._form.reset();
+      },
+    });
+  }
+
+  public listActivities(id: number): void {
+    this.aulaProjectService.listActivities(id).subscribe({
+      next: (activities) => {
+        this._activities = activities;
       },
     });
   }

@@ -124,7 +124,7 @@
           </form>
           <hr />
         </div>
-        <div>
+        <div *ngIf="activities.length != 0; else notFound">
           <table class="table">
             <thead>
               <tr>
@@ -144,6 +144,11 @@
             </tbody>
           </table>
         </div>
+        <ng-template #notFound>
+          <h3 class="">
+            No hay actividades creadas para este plan de trabajo
+          </h3>
+        </ng-template>
       </div>
     </div>
   </div>

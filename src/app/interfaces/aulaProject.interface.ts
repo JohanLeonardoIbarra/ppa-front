@@ -23,5 +23,9 @@ export interface ActivityAP {
   fecha_fin: string;
   cumplimiento: string;
   observacion: string;
-  proyecto_aula: number;
+}
+
+export interface ActivityAPCreation {
+  actividadPA: ActivityAP;
+  estudiantes: number[];
 }
